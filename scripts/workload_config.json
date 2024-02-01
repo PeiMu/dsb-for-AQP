@@ -1,8 +1,8 @@
 {
-	"output_dir": "D:\\exp\\workload",
-	"binary_dir": "D:\\code\\v2.11.0rc2\\tools",
-	"query_template_root_dir": "D:\\query_templates_sqlserver",
-	"dialect" : "sqlserver",
+	"output_dir": "./out/",
+	"binary_dir": ".",
+	"query_template_root_dir": "../../query_templates_pg/",
+	"dialect" : "postgres",
 	"workload":
 	[
 		{
