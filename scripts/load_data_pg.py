@@ -47,5 +47,7 @@ for table in tables:
     pg_util.execute(cursor, 'delete from ' + table + ';', verbose=True)
     pg_util.bulk_load_from_csv_file(cursor, file_path, tmp_csv_path, table, delimiter='|')
 
+os.remove(tmp_csv_path)
+
 cursor.close()
 conn.close()
