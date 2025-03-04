@@ -15,14 +15,14 @@ bin_dir = os.getcwd()
 bin_path = os.path.join(bin_dir, 'dsdgen')
 
 data_path = bin_dir + "/out/"  # directory of data files
-db_name = "pei"  # database name
+db_name = "dsb"  # database name
 tmp_csv_path = data_path + "tmp"  # path of tmp csv file for bulk loading
 
-create_db = False  # If create the database
-create_table = False  # If create the tables
+create_db = False # If create the database
+create_table = True # If create the tables
 
 # postgres credential
-user = 'pei'
+user = 'postgres'
 password = ''
 
 # create database
@@ -37,9 +37,9 @@ cursor = conn.cursor()
 
 # create tables
 if create_table:
-    sql_path = bin_dir + "/../scripts/create_tables.sql"
+    sql_path = bin_dir + "/../../scripts/create_tables.sql"
     print(sql_path)
-    # pg_util.execute(cursor, open(sql_path, 'r').read(), verbose=True)
+    pg_util.execute(cursor, open(sql_path, 'r').read(), verbose=True)
 
 # insert tuples into tables
 for table in tables:

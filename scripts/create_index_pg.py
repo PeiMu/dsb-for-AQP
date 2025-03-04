@@ -1,16 +1,16 @@
 import os
 import pg_util
 
-db_name = # database name
-bin_path = # binary of Postgres
-sql_path = r'D:\scripts\create_index_pg.sql'
+db_name = r'dsb' # database name
+bin_path = r'/home/pei/Project/project_bins/bin/postgres' # binary of Postgres
+sql_path = r'../../scripts/dsb_index_pg.sql'
 
 # start database service
 pg_util.start_server()
 
 # postgres credential
 user = 'postgres'
-password = 'admin'
+password = ''
 
 # connect to the database
 conn = pg_util.connect(user = user, password = password, db_name = db_name)

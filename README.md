@@ -14,6 +14,27 @@ as the DSB benchmark does not comply with the TPC-DS benchmark
 
 
 ## Compile the code
+### step by step guidance
+```bash
+cd code/tools/
+make clean && make # sudo apt install gcc-9
+pg_start # start postgres server
+createdb dsb
+
+# prepare python environment
+conda create -n dsb python=3.10
+conda activate dsb
+pip install -r ../../scripts/requirements.txt
+
+python ../../scripts/generate_workload.py
+python ../../scripts/generate_dsb_db_files.py
+
+createdb dsb
+python ../../scripts/load_data_pg.py
+python ../../scripts/create_index_pg.py
+```
+
+### reference
 - The code can be compiled based on the instructions in ./code/v2.11.0rc2/tools/How_To_Guide-DS-V2.0.0.docx.
 
 ## Data generation
