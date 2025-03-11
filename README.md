@@ -22,7 +22,7 @@ make clean && make # sudo apt install gcc-9
 # prepare python environment
 conda create -n dsb python=3.10
 conda activate dsb
-pip install -r ../../scripts/requirements.txt
+pip3 install -r ../../scripts/requirements.txt
 
 python ../../scripts/generate_dsb_db_files.py # data files are in code/tools/out
 python ../../scripts/generate_workload.py # queries are in code/tools/out
