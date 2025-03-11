@@ -38,7 +38,7 @@ cd code/tools/
 python ../../scripts/load_data_pg.py
 python ../../scripts/create_index_pg.py
 
-cd ../../script
+cd ../../scripts
 
 bash ./execute_dsb_pg.sh Official
 bash ./execute_dsb_pg.sh QuerySplit
