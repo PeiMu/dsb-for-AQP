@@ -4,36 +4,46 @@ from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
 import util
 
+
 def bulk_load_from_csv_file(cursor, csv_file, tmp_file, table_name, delimiter):
-	# Split the csv file into batches to load incrementally.
-	batch_size = 100000
-	prev_pos = 0
-	count = 0
-	with open(csv_file) as fin:
-		flag = True
-		while flag:
-			with open(tmp_file, 'w') as fout:
-				cur = 0
-				for i in range(batch_size):
-					line = fin.readline()
-					# Check if we reach EOF
-					pos = fin.tell()
-					if pos == prev_pos:
-						flag = False
-						break
-					else:
-						prev_pos = pos
-						fout.write(line)
-						count += 1
-						cur += 1
-				load_from_csv_file(cursor, tmp_file, table_name, delimiter)
-				print('.', end = '', flush = True)
-	print('loaded', count, 'rows from', csv_file, 'to table', table_name)
+    # Split the csv file into batches to load incrementally.
+    batch_size = 100000
+    count = 0
+    with open(csv_file) as fin:
+        while True:
+            batch = []
+            for _ in range(batch_size):
+                line = fin.readline()
+                if not line:  # Reliable EOF check
+                    break
+                batch.append(line)
+            
+            if not batch:
+                break  # Exit when no more data
+            
+            # Write batch to temp file
+            with open(tmp_file, 'w') as fout:
+                fout.writelines(batch)
+            
+            # Load batch
+            load_from_csv_file(cursor, tmp_file, table_name, delimiter)
+            count += len(batch)
+            print('.', end='', flush=True)
+    
+    print(f'Loaded {count} rows from {csv_file} to {table_name}')
 
 
 def load_from_csv_file(cursor, csv_file, table_name, delimiter):
-	sql_cmd = 'copy ' + table_name + " from '" + csv_file + "' with (delimiter '" + delimiter + "', format csv);"
-	execute(cursor, sql_cmd)
+    try:
+        with open(csv_file, 'r') as file:
+            cursor.copy_expert(
+                f"COPY {table_name} FROM STDIN WITH (FORMAT CSV, DELIMITER '{delimiter}', HEADER FALSE)",
+                file
+            )
+    except Exception as e:
+        print(f"ERROR loading {csv_file}: {e}")
+        raise  # Re-raise to halt execution
+
 
 def execute(cursor, cmd, verbose = False):
 	try:

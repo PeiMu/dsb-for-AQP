@@ -18,20 +18,37 @@ as the DSB benchmark does not comply with the TPC-DS benchmark
 ```bash
 cd code/tools/
 make clean && make # sudo apt install gcc-9
-pg_start # start postgres server
-createdb dsb
 
 # prepare python environment
 conda create -n dsb python=3.10
 conda activate dsb
 pip install -r ../../scripts/requirements.txt
 
-python ../../scripts/generate_workload.py
-python ../../scripts/generate_dsb_db_files.py
+python ../../scripts/generate_dsb_db_files.py # data files are in code/tools/out
+python ../../scripts/generate_workload.py # queries are in code/tools/out
+```
 
+### prepare and run postgres
+```bash
+pg_start # start postgres server
 createdb dsb
+
+cd code/tools/
+
 python ../../scripts/load_data_pg.py
 python ../../scripts/create_index_pg.py
+
+cd ../../script
+
+bash ./execute_dsb_pg.sh Official
+bash ./execute_dsb_pg.sh QuerySplit
+
+bash ./export_csv_pg.sh
+```
+
+### prepare duckdb
+```bash
+bash ./execute_dsb_duckdb.sh
 ```
 
 ### reference
