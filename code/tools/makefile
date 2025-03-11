@@ -47,7 +47,7 @@ OS	=	LINUX
 # CC
 AIX_CC		= xlC
 HPUX_CC		= gcc
-LINUX_CC		= gcc-9
+LINUX_CC		= gcc
 NCR_CC		= cc
 SOLARIS_CC	= gcc
 SOL86_CC	= cc
