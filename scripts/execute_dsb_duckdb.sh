@@ -2,6 +2,9 @@
 
 rm -f ./dsb.db
 
+# compile vanillia duckdb
+# cd ../ && make clean && GEN=ninja ENABLE_QUERY_SPLIT=0 VERBOSE=1 make
+
 # create schema
 echo "create dsb schema"
 echo -ne ".read create_tables.sql" | duckdb ./dsb.db
@@ -16,8 +19,8 @@ do
 done
 
 # execute queries
-dir_1="${PWD}/../code/tools/out/1/"
-dir_2="${PWD}/../code/tools/out/2/"
+dir_1="${PWD}/../code/tools/1_instance_out/1/"
+dir_2="${PWD}/../code/tools/1_instance_out/2/"
 iteration=1
 
 rm -rf job_result/

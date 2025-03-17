@@ -40,6 +40,8 @@ python ../../scripts/create_index_pg.py
 
 cd ../../scripts
 
+bash ./prepare_QuerySplit_queries.sh
+
 bash ./execute_dsb_pg.sh Official
 bash ./execute_dsb_pg.sh QuerySplit
 

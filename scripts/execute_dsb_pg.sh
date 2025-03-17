@@ -1,17 +1,24 @@
 #!/bin/bash
 
-dir_1="${PWD}/../code/tools/out/1/"
-dir_2="${PWD}/../code/tools/out/2/"
+if [ -z "$1" ]; then
+  echo "Please enter Official or QuerySplit!"
+  exit 1
+fi
+
+dir_1="${PWD}/../code/tools/1_instance_out_$1/1/"
+dir_2="${PWD}/../code/tools/1_instance_out_$1/2/"
 iteration=1
+
+log_name=pg_dsb_$1.txt
 
 rm -f dsb_result/*
 mkdir -p dsb_result/
 
 for i in $(eval echo {1.."${iteration}"}); do
   for sql in $(find "$dir_1" "$dir_2" -type f -name "*.sql"); do
-    echo "execute ${sql}" 2>&1|tee -a pg_dsb.txt;
-    psql -U postgres -d dsb -f "${sql}" 2>&1|tee -a pg_dsb.txt;
+    echo "execute ${sql}" 2>&1|tee -a ${log_name};
+    psql -U postgres -d dsb -f "${sql}" 2>&1|tee -a ${log_name};
   done
 done
 
-mv pg_dsb.txt dsb_result/.
+mv ${log_name} dsb_result/.
