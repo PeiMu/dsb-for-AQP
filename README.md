@@ -36,6 +36,7 @@ createdb dsb
 cd code/tools/
 
 python ../../scripts/load_data_pg.py
+psql -U postgres -d dsb -f ../../scripts/tpcds_ri.sql
 python ../../scripts/create_index_pg.py
 
 cd ../../scripts
