@@ -5,7 +5,7 @@ import shutil
 bin_dir = os.getcwd()
 bin_path = os.path.join(bin_dir, 'dsdgen')
 
-scale = 10
+scale = 100
 file_dir = bin_dir + "/out"  # directory of database files
 
 if os.path.exists(file_dir):
