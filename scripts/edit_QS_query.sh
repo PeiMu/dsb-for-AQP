@@ -2,6 +2,9 @@
 
 # SQL settings to add to the beginning of each file
 settings="
+switch to c_r;
+switch to relationshipcenter;
+
 SET parallel_leader_participation = off;
 set max_parallel_workers = '0';
 set max_parallel_workers_per_gather = '0';
