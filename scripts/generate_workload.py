@@ -99,6 +99,6 @@ def generate_workload(workload_config):
     shutil.rmtree(tmp_dir, ignore_errors=True)
 
 
-workload_config_file = r'../../scripts/workload_config_1_instance.json'
+workload_config_file = r'../../scripts/workload_config_1_instance_wo_multi_block.json'
 workload_config = load_json(workload_config_file)
 generate_workload(workload_config)
