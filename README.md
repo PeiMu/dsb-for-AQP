@@ -1,6 +1,6 @@
 # DSB Benchmark
 
-The DSB benchmark is designed for evaluating both workloaddriven and traditional database systems on modern decision support workloads. DSB is adapted from the widely-used industrialstandard TPC-DS benchmark. It enhances the TPC-DS benchmark with complex data distribution and challenging yet semantically meaningful query templates. DSB also introduces configurable and dynamic workloads to assess the adaptability of database systems. Since workload-driven and traditional database systems have different performance dimensions, including the additional resources required for tuning and maintaining the systems, we provide guidelines on evaluation methodology and metrics to report.
+The DSB benchmark is designed for evaluating both workload-driven and traditional database systems on modern decision support workloads. DSB is adapted from the widely-used industrialstandard TPC-DS benchmark. It enhances the TPC-DS benchmark with complex data distribution and challenging yet semantically meaningful query templates. DSB also introduces configurable and dynamic workloads to assess the adaptability of database systems. Since workload-driven and traditional database systems have different performance dimensions, including the additional resources required for tuning and maintaining the systems, we provide guidelines on evaluation methodology and metrics to report.
 
 The detail of this benchmark is described here:
 
@@ -14,7 +14,7 @@ as the DSB benchmark does not comply with the TPC-DS benchmark
 
 
 ## Compile the code
-### step by step guidance
+### step-by-step guidance
 ```bash
 cd code/tools/
 make clean && make # sudo apt install gcc-9
@@ -24,34 +24,44 @@ conda create -n dsb python=3.10
 conda activate dsb
 pip3 install -r ../../scripts/requirements.txt
 
-python ../../scripts/generate_dsb_db_files.py # data files are in code/tools/out
-python ../../scripts/generate_workload.py # queries are in code/tools/out
+python ../../scripts/generate_dsb_db_files.py 10 # data files are in code/tools/out_10
+# OR python ../../scripts/generate_dsb_db_files.py 100 # data files are in code/tools/out_100
+python ../../scripts/generate_workload.py postgres # queries are in code/tools/1_instance_out
+# OR python ../../scripts/generate_workload.py duckdb # queries are in code/tools/1_instance_out
 ```
 
 ### prepare and run postgres
 ```bash
 pg_start # start postgres server
-createdb dsb
+createdb dsb_10
+# OR createdb dsb_100
 
 cd code/tools/
 
-python ../../scripts/load_data_pg.py
-psql -U postgres -d dsb -f tpcds_ri.sql
-python ../../scripts/create_index_pg.py
+python ../../scripts/load_data_pg.py 10
+# OR python ../../scripts/load_data_pg.py 100
+psql -U postgres -d dsb_10 -f tpcds_ri.sql
+# OR psql -U postgres -d dsb_100 -f tpcds_ri.sql
+python ../../scripts/create_index_pg.py 10
+# OR python ../../scripts/create_index_pg.py 100
 
 cd ../../scripts
 
 bash ./prepare_QuerySplit_queries.sh
 
-bash ./execute_dsb_pg.sh Official
-bash ./execute_dsb_pg.sh QuerySplit
+bash ./execute_dsb_pg.sh Official 10
+# OR bash ./execute_dsb_pg.sh Official 100
+bash ./execute_dsb_pg.sh QuerySplit 10
+# OR bash ./execute_dsb_pg.sh QuerySplit 100
 
-bash ./export_csv_pg.sh
+bash ./export_csv_pg.sh 10
+# OR bash ./export_csv_pg.sh 100
 ```
 
 ### prepare duckdb
 ```bash
-bash ./execute_dsb_duckdb.sh
+bash ./prepare_duckdb.sh 10
+# OR bash ./prepare_duckdb.sh 100
 ```
 
 ### reference
