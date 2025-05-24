@@ -1,5 +1,11 @@
 import os
 import pg_util
+import sys
+
+
+scale = 10
+if len(sys.argv) > 1:
+    scale = sys.argv[1]
 
 tables = ['call_center',
           'catalog_page', 'catalog_returns',
@@ -14,8 +20,8 @@ tables = ['call_center',
 bin_dir = os.getcwd()
 bin_path = os.path.join(bin_dir, 'dsdgen')
 
-data_path = bin_dir + "/out/"  # directory of data files
-db_name = "dsb"  # database name
+data_path = bin_dir + "/out_" + str(scale) + "/"  # directory of data files
+db_name = "dsb_" + str(scale)  # database name
 tmp_csv_path = data_path + "tmp"  # path of tmp csv file for bulk loading
 
 create_db = False # If create the database

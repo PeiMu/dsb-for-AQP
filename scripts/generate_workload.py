@@ -2,6 +2,11 @@ import simplejson as json
 import shutil
 import os
 import subprocess
+import sys
+
+db_engine = "duckdb"
+if len(sys.argv) > 1:
+    db_engine = sys.argv[1]
 
 
 def load_json(filename):
@@ -98,7 +103,9 @@ def generate_workload(workload_config):
                              workload_config['dialect'], workload)
     shutil.rmtree(tmp_dir, ignore_errors=True)
 
-
-workload_config_file = r'../../scripts/workload_config_1_instance_qs.json'
+if db_engine == "postgres":
+    workload_config_file = r'../../scripts/workload_config_1_instance_qs.json'
+else:
+    workload_config_file = r'../../scripts/workload_config_1_instance_wo_multi_block.json'
 workload_config = load_json(workload_config_file)
 generate_workload(workload_config)

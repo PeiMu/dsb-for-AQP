@@ -1,7 +1,13 @@
 import os
 import pg_util
+import sys
 
-db_name = r'dsb' # database name
+
+scale = 10
+if len(sys.argv) > 1:
+    scale = sys.argv[1]
+
+db_name = r'dsb_' + str(scale) # database name
 bin_path = r'/home/pei/Project/project_bins/bin/postgres' # binary of Postgres
 sql_path = r'../../scripts/dsb_index_pg.sql'
 
