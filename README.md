@@ -61,7 +61,9 @@ bash ./export_csv_pg.sh 10
 ### prepare duckdb
 ```bash
 bash ./prepare_duckdb.sh 10
+cp dsb_10.db duckdb_measure_dir
 # OR bash ./prepare_duckdb.sh 100
+# OR cp dsb_100.db duckdb_measure_dir
 ```
 
 ### reference
