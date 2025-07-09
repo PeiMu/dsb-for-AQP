@@ -7,7 +7,7 @@ fi
 
 csv_dir=../code/tools/out_$1/csv
 rm -rf ${csv_dir}
-mkdir ${csv_dir}
+mkdir -p ${csv_dir}
 
 for table in customer_address customer_demographics date_dim warehouse ship_mode time_dim reason income_band item store call_center customer web_site store_returns household_demographics web_page promotion catalog_page inventory catalog_returns web_returns web_sales catalog_sales store_sales
 do

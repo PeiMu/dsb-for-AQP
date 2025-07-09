@@ -20,13 +20,13 @@ def bulk_load_from_csv_file(cursor, csv_file, tmp_file, table_name, delimiter):
             
             if not batch:
                 break  # Exit when no more data
-            
-            # Write batch to temp file
-            with open(tmp_file, 'w') as fout:
-                fout.writelines(batch)
-            
-            # Load batch
-            load_from_csv_file(cursor, tmp_file, table_name, delimiter)
+    
+            # Use StringIO instead of writing to disk
+            csv_buffer = io.StringIO(''.join(batch))
+            cursor.copy_expert(
+                f"COPY {table_name} FROM STDIN WITH (FORMAT CSV, DELIMITER '{delimiter}', HEADER FALSE)",
+                csv_buffer
+            )
             count += len(batch)
             print('.', end='', flush=True)
     
