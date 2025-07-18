@@ -13,6 +13,10 @@ Disclaimer: The DSB benchmark is derived from TPC-DS and as such is not comparab
 as the DSB benchmark does not comply with the TPC-DS benchmark
 
 
+## DSB for AQP
+This repo mainly provides datasets and benchmarking queries for AQP, including the AQP-DuckDB, the AQP-PostgreSQL, and the SkinnerDB.
+
+
 ## Compile the code
 ### step-by-step guidance
 ```bash
