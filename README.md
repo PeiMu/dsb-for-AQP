@@ -46,6 +46,8 @@ python ../../scripts/load_data_pg.py 10
 # OR python ../../scripts/load_data_pg.py 100
 psql -U postgres -d dsb_10 -f tpcds_ri.sql
 # OR psql -U postgres -d dsb_100 -f tpcds_ri.sql
+
+# first modify the `bin_path =` in `../../scripts/create_index_pg.py`, set to your postgres bin path
 python ../../scripts/create_index_pg.py 10
 # OR python ../../scripts/create_index_pg.py 100
 
